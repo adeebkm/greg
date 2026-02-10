@@ -121,6 +121,24 @@ const GoogleSimulation: React.FC<GoogleSimulationProps> = ({ searchType = 'greg'
                           images={[
                             {
                               id: 'greg-img-1',
+                              title: 'Greg Krieger – Howard, Kohn, Sprague & FitzGerald, LLP',
+                              source: 'Howard, Kohn, Sprague & FitzGerald, LLP',
+                              imageUrl: '/greg1.jpeg'
+                            },
+                            {
+                              id: 'greg-img-2',
+                              title: '20+ "Greg Krieger" profiles | LinkedIn',
+                              source: 'LinkedIn',
+                              imageUrl: '/greg2.jpeg'
+                            },
+                            {
+                              id: 'greg-img-3',
+                              title: 'Obituary information for Gregory Krieger',
+                              source: 'Evergreen Memorial Funeral Home',
+                              imageUrl: '/greg3.jpeg'
+                            },
+                            {
+                              id: 'greg-img-4',
                               title: 'Greg Krieger – LinkedIn',
                               source: 'LinkedIn',
                               imageUrl: '/Photos/Race - White - Male/1c420fbb-2d7c-433f-b7c9-f75dd75f7bf3.jpg'
