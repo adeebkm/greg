@@ -41,6 +41,11 @@ export const getFakeImageUrl = (resultId: string, type: 'avatar' | 'thumbnail' |
   
   const size = dimensions[type];
   
+  // Use profile picture from Photos folder for Greg Krieger (White American Male)
+  if ((resultId.toLowerCase().includes('greg') || resultId.toLowerCase().includes('greg1')) && (type === 'avatar' || type === 'thumbnail')) {
+    return getPersonaProfilePicture('White American', 'Male');
+  }
+  
   // Use specific image for Akhilesh Kotegar as requested
   if (resultId.toLowerCase() === 'akhilesh' && (type === 'avatar' || type === 'thumbnail')) {
     return 'https://media.licdn.com/dms/image/v2/C4D03AQFgiUNxZzODeg/profile-displayphoto-shrink_100_100/profile-displayphoto-shrink_100_100/0/1661234870909?e=1771459200&v=beta&t=0a9tUlxh-uDfEhPsV0rMCUx37l1bTukNk0E5HZMaXFI';
@@ -71,55 +76,31 @@ export const getFakeVideoThumbnail = (videoId: string): string => {
 };
 
 /**
- * Get photos from Photos folder based on race and gender
+ * Get a single profile picture from Photos folder based on race and gender
  */
-export const getPersonaPhotos = (race: 'White American' | 'African American', gender: 'Male' | 'Female'): string[] => {
+export const getPersonaProfilePicture = (race: 'White American' | 'African American', gender: 'Male' | 'Female'): string => {
   const raceFolder = race === 'White American' ? 'Race - White' : 'Race - Black';
   const genderFolder = gender === 'Male' ? 'Male' : 'Female';
   const basePath = `/Photos/${raceFolder} - ${genderFolder}`;
   
-  // Select 5 photos based on race and gender
+  // Select 1 profile picture based on race and gender
   if (race === 'White American' && gender === 'Male') {
-    return [
-      `${basePath}/1c420fbb-2d7c-433f-b7c9-f75dd75f7bf3.jpg`,
-      `${basePath}/48589cbc-d48e-48b4-932e-ca6ae5d580e0.jpg`,
-      `${basePath}/6233ab8a-8780-4354-9b44-1264a3408abb.jpg`,
-      `${basePath}/6d646f0b-75c4-4fb8-bf95-4c68a6541bb1.jpg`,
-      `${basePath}/7d4c91b0-3cc7-4d86-9566-cb7b27da802b.jpg`
-    ];
+    return `${basePath}/1c420fbb-2d7c-433f-b7c9-f75dd75f7bf3.jpg`;
   }
   
   if (race === 'African American' && gender === 'Male') {
-    return [
-      `${basePath}/4fd6816a-d38e-4748-9f63-f5c712f073ae.jpg`,
-      `${basePath}/580eadd0-f656-498d-b3c1-eb8d3628e7f5.jpg`,
-      `${basePath}/797e87d8-3642-4dc9-94a6-4f2ba56ce7a8.jpg`,
-      `${basePath}/90bd288c-9c18-45ea-90b1-6e72129e440e.jpg`,
-      `${basePath}/980f74ff-5e0f-4f7d-a044-3433547ed748.jpg`
-    ];
+    return `${basePath}/4fd6816a-d38e-4748-9f63-f5c712f073ae.jpg`;
   }
   
   if (race === 'White American' && gender === 'Female') {
-    return [
-      `${basePath}/0a4c02fe-e683-4f7c-a73e-96722fc32bd0.jpg`,
-      `${basePath}/182e87b4-3e2f-4544-bbf1-34633bd7dcba.jpg`,
-      `${basePath}/2ded4a6c-1244-4ec7-ac9d-a0d4da6c41b1.jpg`,
-      `${basePath}/41c58451-83d9-4461-8972-0e567cce6ef9.jpg`,
-      `${basePath}/426236a4-db77-4860-afb6-38ae60060f47.jpg`
-    ];
+    return `${basePath}/0a4c02fe-e683-4f7c-a73e-96722fc32bd0.jpg`;
   }
   
   if (race === 'African American' && gender === 'Female') {
-    return [
-      `${basePath}/1716b819-83d5-41b9-93f8-2d2bf47c87a5.jpg`,
-      `${basePath}/1afd9948-fe1b-4b7d-a413-03cb6174c45f.jpg`,
-      `${basePath}/21f72b9b-20bf-482b-8699-f2c0241458cd.jpg`,
-      `${basePath}/25430f6c-c283-4aa0-a7b6-350735f6e5ba.jpg`,
-      `${basePath}/66d24b21-1fd2-4771-be60-440e4c55b0df.jpg`
-    ];
+    return `${basePath}/1716b819-83d5-41b9-93f8-2d2bf47c87a5.jpg`;
   }
   
-  return [];
+  return '';
 };
 
 
