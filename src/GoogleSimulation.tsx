@@ -12,6 +12,7 @@ import {
   type SimResult
 } from './data/results';
 import { getRelatedSearches } from './data/relatedSearches';
+import { trackPageView, trackTabChange, trackPagination, trackSearch } from './utils/tracking';
 
 interface GoogleSimulationProps {
   searchType?: 'greg';
@@ -31,6 +32,25 @@ const GoogleSimulation: React.FC<GoogleSimulationProps> = ({ searchType = 'greg'
   useEffect(() => {
     setCurrentPage(1);
   }, [activeTab]);
+
+  // Track page view on mount
+  useEffect(() => {
+    trackPageView('greg', currentPage, activeTab);
+  }, []);
+
+  // Track tab changes
+  useEffect(() => {
+    if (activeTab) {
+      trackTabChange(activeTab, 'greg');
+    }
+  }, [activeTab]);
+
+  // Track pagination
+  useEffect(() => {
+    if (currentPage > 1) {
+      trackPagination(currentPage, 'greg');
+    }
+  }, [currentPage]);
 
   // Get results for Greg
   const allResults = useMemo(() => {
@@ -90,7 +110,16 @@ const GoogleSimulation: React.FC<GoogleSimulationProps> = ({ searchType = 'greg'
 
   return (
     <div style={{ minHeight: '100vh', backgroundColor: '#fff' }}>
-      <TopBar searchQuery={searchQuery} onSearchChange={setSearchQuery} isDark={isDark} />
+      <TopBar 
+        searchQuery={searchQuery} 
+        onSearchChange={(query) => {
+          setSearchQuery(query);
+          if (query) {
+            trackSearch(query, 'greg');
+          }
+        }} 
+        isDark={isDark} 
+      />
       <Tabs activeTab={activeTab} onTabChange={setActiveTab} isDark={isDark} />
 
       <div style={{ maxWidth: '1128px', margin: '0 auto', padding: '0 16px' }}>
@@ -145,12 +174,16 @@ const GoogleSimulation: React.FC<GoogleSimulationProps> = ({ searchType = 'greg'
                             }
                           ]}
                           isDark={isDark}
+                          persona="greg"
                         />
                       )}
                       <ResultCard
                         result={result}
-                        onOpen={setSelectedResult}
+                        onOpen={(result) => {
+                          setSelectedResult(result);
+                        }}
                         isDark={isDark}
+                        persona="greg"
                       />
                     </React.Fragment>
                   );
@@ -172,7 +205,10 @@ const GoogleSimulation: React.FC<GoogleSimulationProps> = ({ searchType = 'greg'
               }}>
                 {currentPage > 1 && (
                   <button
-                    onClick={() => setCurrentPage(currentPage - 1)}
+                    onClick={() => {
+                      setCurrentPage(currentPage - 1);
+                      trackPagination(currentPage - 1, 'greg');
+                    }}
                     style={{
                       padding: '8px 16px',
                       border: '1px solid #dadce0',
@@ -197,7 +233,10 @@ const GoogleSimulation: React.FC<GoogleSimulationProps> = ({ searchType = 'greg'
                   return (
                     <button
                       key={pageNum}
-                      onClick={() => setCurrentPage(pageNum)}
+                      onClick={() => {
+                        setCurrentPage(pageNum);
+                        trackPagination(pageNum, 'greg');
+                      }}
                       style={{
                         minWidth: '40px',
                         height: '40px',
@@ -218,7 +257,10 @@ const GoogleSimulation: React.FC<GoogleSimulationProps> = ({ searchType = 'greg'
 
                 {currentPage < totalPages && (
                   <button
-                    onClick={() => setCurrentPage(currentPage + 1)}
+                    onClick={() => {
+                      setCurrentPage(currentPage + 1);
+                      trackPagination(currentPage + 1, 'greg');
+                    }}
                     style={{
                       padding: '8px 16px',
                       border: '1px solid #dadce0',

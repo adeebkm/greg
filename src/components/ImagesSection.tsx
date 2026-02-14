@@ -1,4 +1,5 @@
 import React from 'react';
+import { trackImageClick } from '../utils/tracking';
 
 interface ImageItem {
   id: string;
@@ -10,9 +11,10 @@ interface ImageItem {
 interface ImagesSectionProps {
   images: ImageItem[];
   isDark?: boolean;
+  persona?: string;
 }
 
-export const ImagesSection: React.FC<ImagesSectionProps> = ({ images, isDark }) => {
+export const ImagesSection: React.FC<ImagesSectionProps> = ({ images, isDark, persona = 'greg' }) => {
   const textColor = isDark ? '#e8eaed' : '#202124';
   const borderColor = isDark ? '#3c4043' : '#ebebeb';
   const subTextColor = isDark ? '#9aa0a6' : '#70757a';
@@ -52,6 +54,7 @@ export const ImagesSection: React.FC<ImagesSectionProps> = ({ images, isDark }) 
         {images.map((image) => (
           <div
             key={image.id}
+            onClick={() => trackImageClick(image.id, image.title, persona)}
             style={{
               flexShrink: 0,
               cursor: 'pointer',

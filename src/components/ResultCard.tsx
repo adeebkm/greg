@@ -1,10 +1,12 @@
 import React from 'react';
 import { SimResult } from '../data/results';
+import { trackResultClick } from '../utils/tracking';
 
 interface ResultCardProps {
   result: SimResult;
   onOpen: (result: SimResult) => void;
   isDark?: boolean;
+  persona?: string;
 }
 
 const PlatformIcon: React.FC<{ platform: string; isDark?: boolean }> = ({ platform, isDark }) => {
@@ -363,7 +365,7 @@ const PlatformIcon: React.FC<{ platform: string; isDark?: boolean }> = ({ platfo
   );
 };
 
-export const ResultCard: React.FC<ResultCardProps> = ({ result, onOpen, isDark }) => {
+export const ResultCard: React.FC<ResultCardProps> = ({ result, onOpen, isDark, persona = 'greg' }) => {
   const followerCount = result.followers || '';
   
   const textColor = isDark ? '#bdc1c6' : '#4d5156';
@@ -422,6 +424,7 @@ export const ResultCard: React.FC<ResultCardProps> = ({ result, onOpen, isDark }
           href="#"
           onClick={(e) => {
             e.preventDefault();
+            trackResultClick(result.id, result.platform, result.displayName, persona);
             onOpen(result);
           }}
           style={{
