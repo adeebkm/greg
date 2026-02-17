@@ -92,6 +92,28 @@ export const LinkedInProfileView: React.FC<LinkedInProfileProps> = ({ resultId, 
               </div>
             ))}
             <div style={{ borderLeft: '1px solid #e0e0e0', height: '32px', margin: '0 8px' }} />
+            <button 
+              onClick={onClose} 
+              style={{ 
+                backgroundColor: '#ffeb3b',
+                border: 'none',
+                borderRadius: '20px',
+                padding: '8px 16px',
+                cursor: 'pointer',
+                color: '#000',
+                fontWeight: 600,
+                fontSize: '14px',
+                display: 'flex',
+                alignItems: 'center',
+                gap: '6px',
+                marginRight: '8px'
+              }}
+            >
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                <path d="M19 12H5M12 19l-7-7 7-7"/>
+              </svg>
+              Back to search
+            </button>
             <button onClick={onClose} style={{ background: 'none', border: 'none', cursor: 'pointer', padding: '8px', color: '#666' }}>
               <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M6 18L18 6M6 6l12 12" /></svg>
             </button>
