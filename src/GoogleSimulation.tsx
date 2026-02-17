@@ -23,10 +23,21 @@ const GoogleSimulation: React.FC<GoogleSimulationProps> = ({ searchType = 'greg'
   const [activeTab, setActiveTab] = useState('All');
   const [selectedResult, setSelectedResult] = useState<SimResult | null>(null);
   const [currentPage, setCurrentPage] = useState(1);
+  const [isMobile, setIsMobile] = useState(false);
   const resultsPerPage = 10;
 
   // Force light mode as requested
   const isDark = false;
+
+  // Check for mobile viewport
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
 
   // Initialize history state from URL or defaults
   useEffect(() => {
@@ -208,10 +219,10 @@ const GoogleSimulation: React.FC<GoogleSimulationProps> = ({ searchType = 'greg'
       />
       <Tabs activeTab={activeTab} onTabChange={setActiveTab} isDark={isDark} />
 
-      <div style={{ maxWidth: '1128px', margin: '0 auto', padding: '0 16px' }}>
-        <div style={{ display: 'flex', gap: '32px', paddingTop: '20px' }}>
+      <div style={{ maxWidth: '1128px', margin: '0 auto', padding: isMobile ? '0 8px' : '0 16px' }}>
+        <div style={{ display: 'flex', gap: isMobile ? '0' : '32px', paddingTop: isMobile ? '12px' : '20px' }}>
           {/* Main Results Column */}
-          <div style={{ flex: '1', minWidth: 0 }}>
+          <div style={{ flex: '1', minWidth: 0, width: '100%' }}>
             {/* Results Count */}
             <div style={{ color: '#70757a', fontSize: '14px', marginBottom: '16px' }}>
               About {filteredResults.length} results
@@ -298,7 +309,9 @@ const GoogleSimulation: React.FC<GoogleSimulationProps> = ({ searchType = 'greg'
                 marginTop: '32px',
                 marginBottom: '32px',
                 paddingTop: '20px',
-                borderTop: '1px solid #ebebeb'
+                borderTop: '1px solid #ebebeb',
+                flexWrap: 'wrap',
+                padding: '20px 8px'
               }}>
                 {currentPage > 1 && (
                   <button

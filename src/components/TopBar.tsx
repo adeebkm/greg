@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 
 interface TopBarProps {
   searchQuery: string;
@@ -7,6 +7,17 @@ interface TopBarProps {
 }
 
 export const TopBar: React.FC<TopBarProps> = ({ searchQuery, onSearchChange, isDark }) => {
+  const [isMobile, setIsMobile] = useState(false);
+  
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 640);
+    };
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
+
   const textColor = isDark ? '#e8eaed' : '#202124';
   const bgColor = isDark ? '#202124' : '#fff';
   const borderColor = isDark ? '#5f6368' : '#dfe1e5';
@@ -28,10 +39,37 @@ export const TopBar: React.FC<TopBarProps> = ({ searchQuery, onSearchChange, isD
           right: 0,
           height: '48px'
         }}>
-          <div style={{ display: 'flex', alignItems: 'center', gap: '30px' }}>
-            {/* Logo will be in search area, so this is empty or can be removed */}
+          <div style={{ display: 'flex', alignItems: 'center', gap: '16px', flex: '1', minWidth: 0 }}>
+            <button
+              onClick={(e) => {
+                e.preventDefault();
+                // Non-functional for now
+              }}
+              style={{
+                backgroundColor: '#4285f4',
+                border: 'none',
+                borderRadius: '20px',
+                padding: '8px 16px',
+                cursor: 'pointer',
+                color: '#fff',
+                fontWeight: 500,
+                fontSize: '14px',
+                display: 'flex',
+                alignItems: 'center',
+                gap: '6px',
+                whiteSpace: 'nowrap',
+                flexShrink: 0
+              }}
+              onMouseEnter={(e) => e.currentTarget.style.backgroundColor = '#357ae8'}
+              onMouseLeave={(e) => e.currentTarget.style.backgroundColor = '#4285f4'}
+            >
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                <path d="M19 12H5M12 19l-7-7 7-7"/>
+              </svg>
+              {!isMobile && <span>Back to survey</span>}
+            </button>
           </div>
-          <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '8px', flexShrink: 0 }}>
             <button
               style={{
                 padding: '8px',
@@ -112,9 +150,9 @@ export const TopBar: React.FC<TopBarProps> = ({ searchQuery, onSearchChange, isD
         </div>
 
         {/* Search form area */}
-        <div style={{ maxWidth: '584px', margin: '0 auto', padding: '0 16px', position: 'relative', height: '100%', display: 'flex', alignItems: 'center', gap: '16px' }}>
+        <div style={{ maxWidth: '584px', margin: '0 auto', padding: isMobile ? '0 8px' : '0 16px', position: 'relative', height: '100%', display: 'flex', alignItems: 'center', gap: isMobile ? '4px' : '8px' }}>
           {/* Logo positioned to the left of search bar */}
-          <div style={{ flexShrink: 0 }}>
+          <div style={{ flexShrink: 0, display: isMobile ? 'none' : 'block' }}>
             <a href="#" style={{ textDecoration: 'none' }} onClick={(e) => e.preventDefault()}>
               <div style={{ fontSize: '20px', fontWeight: 400, letterSpacing: 0 }}>
                 {isDark ? (

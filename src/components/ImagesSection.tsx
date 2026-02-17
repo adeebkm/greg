@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { trackImageClick } from '../utils/tracking';
 
 interface ImageItem {
@@ -15,6 +15,17 @@ interface ImagesSectionProps {
 }
 
 export const ImagesSection: React.FC<ImagesSectionProps> = ({ images, isDark, persona = 'greg' }) => {
+  const [isMobile, setIsMobile] = useState(false);
+  
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 640);
+    };
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
+
   const textColor = isDark ? '#e8eaed' : '#202124';
   const borderColor = isDark ? '#3c4043' : '#ebebeb';
   const subTextColor = isDark ? '#9aa0a6' : '#70757a';
@@ -58,12 +69,12 @@ export const ImagesSection: React.FC<ImagesSectionProps> = ({ images, isDark, pe
             style={{
               flexShrink: 0,
               cursor: 'pointer',
-              width: '160px'
+              width: isMobile ? '140px' : '160px'
             }}
           >
             <div style={{
               width: '100%',
-              height: '160px',
+              height: isMobile ? '140px' : '160px',
               borderRadius: '12px',
               overflow: 'hidden',
               marginBottom: '8px',

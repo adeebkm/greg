@@ -66,3 +66,14 @@ body {
   border-bottom: 1px solid #ebebeb;
   background-color: #fff;
 }
+
+/* Responsive styles for mobile */
+@media (max-width: 768px) {
+  .g {
+    padding: 0 0 16px 0;
+  }
+  
+  .g h3 {
+    font-size: 18px;
+  }
+}

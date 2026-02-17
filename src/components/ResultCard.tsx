@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { SimResult } from '../data/results';
 import { trackResultClick } from '../utils/tracking';
 
@@ -366,6 +366,17 @@ const PlatformIcon: React.FC<{ platform: string; isDark?: boolean }> = ({ platfo
 };
 
 export const ResultCard: React.FC<ResultCardProps> = ({ result, onOpen, isDark, persona = 'greg' }) => {
+  const [isMobile, setIsMobile] = useState(false);
+  
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 640);
+    };
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
+
   const followerCount = result.followers || '';
   
   const textColor = isDark ? '#bdc1c6' : '#4d5156';
@@ -379,7 +390,7 @@ export const ResultCard: React.FC<ResultCardProps> = ({ result, onOpen, isDark, 
   };
 
   return (
-    <div className="g" style={{ marginBottom: '24px', maxWidth: '652px' }}>
+    <div className="g" style={{ marginBottom: '24px', maxWidth: '652px', width: '100%' }}>
       {/* Platform and Ellipsis Header */}
       <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '2px' }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: '12px', overflow: 'hidden' }}>
@@ -447,8 +458,8 @@ export const ResultCard: React.FC<ResultCardProps> = ({ result, onOpen, isDark, 
       </h3>
 
       {/* Content Area with optional Side Image */}
-      <div style={{ display: 'flex', gap: '16px', marginTop: '2px', marginLeft: '0' }}>
-        <div style={{ flex: 1 }}>
+      <div style={{ display: 'flex', flexDirection: isMobile ? 'column' : 'row', gap: '16px', marginTop: '2px', marginLeft: '0' }}>
+        <div style={{ flex: 1, order: isMobile ? 2 : 1 }}>
           {/* Info Row: Location, Role, Company */}
           {result.currentRole && (
             <div style={{
@@ -482,11 +493,12 @@ export const ResultCard: React.FC<ResultCardProps> = ({ result, onOpen, isDark, 
         {result.sideImageUrl && (
           <div style={{ 
             flexShrink: 0, 
-            width: '104px', 
-            height: '104px', 
+            width: isMobile ? '100%' : '104px', 
+            height: isMobile ? '200px' : '104px', 
             borderRadius: '8px', 
             overflow: 'hidden',
-            border: `1px solid ${isDark ? '#3c4043' : '#dfe1e5'}`
+            border: `1px solid ${isDark ? '#3c4043' : '#dfe1e5'}`,
+            order: isMobile ? 1 : 2
           }}>
             <img 
               src={result.sideImageUrl} 
