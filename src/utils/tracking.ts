@@ -8,7 +8,7 @@ export interface TrackingEvent {
   url?: string;
   platform?: string;
   persona: string; // 'greg' | 'meredith' | 'tremayne' | 'tanisha'
-  timestamp: Date;
+  timestamp: string | Date; // ISO string when sending, Date when receiving
   sessionId?: string;
   page?: number;
   tab?: string;
@@ -27,15 +27,20 @@ const getSessionId = (): string => {
 
 // Track an event
 export const trackEvent = async (event: Omit<TrackingEvent, 'timestamp' | 'sessionId'>): Promise<void> => {
-  const trackingEvent: TrackingEvent = {
+  const trackingEvent = {
     ...event,
-    timestamp: new Date(),
+    timestamp: new Date().toISOString(), // Convert to ISO string for JSON serialization
     sessionId: getSessionId(),
   };
 
   try {
+    // Determine API URL - use full URL in production, relative in development
+    const apiUrl = import.meta.env.PROD 
+      ? '/api/track' 
+      : `${window.location.origin}/api/track`;
+    
     // Send to API endpoint
-    const response = await fetch('/api/track', {
+    const response = await fetch(apiUrl, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -44,11 +49,27 @@ export const trackEvent = async (event: Omit<TrackingEvent, 'timestamp' | 'sessi
     });
 
     if (!response.ok) {
-      console.error('Failed to track event:', response.statusText);
+      const errorText = await response.text();
+      console.error('Failed to track event:', {
+        status: response.status,
+        statusText: response.statusText,
+        error: errorText,
+        event: trackingEvent
+      });
+    } else {
+      const result = await response.json();
+      if (import.meta.env.DEV) {
+        console.log('Event tracked successfully:', result);
+      }
     }
-  } catch (error) {
-    // Silently fail - don't interrupt user experience
-    console.error('Tracking error:', error);
+  } catch (error: any) {
+    // Log error but don't interrupt user experience
+    console.error('Tracking error:', {
+      error: error.message,
+      stack: error.stack,
+      event: trackingEvent,
+      note: 'API endpoint only works when deployed to Vercel'
+    });
   }
 };
 

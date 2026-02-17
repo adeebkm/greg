@@ -1,4 +1,4 @@
-import React, { useState, useMemo, useEffect } from 'react';
+import React, { useState, useMemo, useEffect, useRef } from 'react';
 import { TopBar } from './components/TopBar';
 import { Tabs } from './components/Tabs';
 import { ResultCard } from './components/ResultCard';
@@ -28,9 +28,95 @@ const GoogleSimulation: React.FC<GoogleSimulationProps> = ({ searchType = 'greg'
   // Force light mode as requested
   const isDark = false;
 
+  // Initialize history state from URL or defaults
+  useEffect(() => {
+    const urlParams = new URLSearchParams(window.location.search);
+    const page = parseInt(urlParams.get('page') || '1', 10);
+    const tab = urlParams.get('tab') || 'All';
+    const resultId = urlParams.get('result');
+    
+    if (page !== currentPage) setCurrentPage(page);
+    if (tab !== activeTab) setActiveTab(tab);
+    
+    // If there's a result ID in URL, find and set it
+    if (resultId) {
+      const result = RESULTS_Greg_Krieger.find(r => r.id === resultId);
+      if (result) setSelectedResult(result);
+    }
+  }, []);
+
+  // Handle browser back/forward navigation
+  useEffect(() => {
+    const handlePopState = (event: PopStateEvent) => {
+      if (event.state) {
+        const { page, tab, resultId } = event.state;
+        if (page !== undefined) setCurrentPage(page);
+        if (tab !== undefined) setActiveTab(tab);
+        if (resultId !== undefined) {
+          if (resultId) {
+            const result = RESULTS_Greg_Krieger.find(r => r.id === resultId);
+            setSelectedResult(result || null);
+          } else {
+            setSelectedResult(null);
+          }
+        }
+      } else {
+        // Fallback to URL params
+        const urlParams = new URLSearchParams(window.location.search);
+        const page = parseInt(urlParams.get('page') || '1', 10);
+        const tab = urlParams.get('tab') || 'All';
+        const resultId = urlParams.get('result');
+        setCurrentPage(page);
+        setActiveTab(tab);
+        if (resultId) {
+          const result = RESULTS_Greg_Krieger.find(r => r.id === resultId);
+          setSelectedResult(result || null);
+        } else {
+          setSelectedResult(null);
+        }
+      }
+    };
+
+    window.addEventListener('popstate', handlePopState);
+    return () => window.removeEventListener('popstate', handlePopState);
+  }, []);
+
+  // Update URL and history when state changes (but not on initial mount)
+  const isInitialMount = useRef(true);
+  useEffect(() => {
+    if (isInitialMount.current) {
+      isInitialMount.current = false;
+      return;
+    }
+
+    const params = new URLSearchParams();
+    if (currentPage > 1) params.set('page', currentPage.toString());
+    if (activeTab !== 'All') params.set('tab', activeTab);
+    if (selectedResult) params.set('result', selectedResult.id);
+    
+    const newUrl = params.toString() 
+      ? `${window.location.pathname}?${params.toString()}`
+      : window.location.pathname;
+    
+    const state = {
+      page: currentPage,
+      tab: activeTab,
+      resultId: selectedResult?.id || null
+    };
+
+    // Only push state if it's different from current URL
+    const currentSearch = window.location.search;
+    const newSearch = params.toString() ? `?${params.toString()}` : '';
+    if (currentSearch !== newSearch) {
+      window.history.pushState(state, '', newUrl);
+    }
+  }, [currentPage, activeTab, selectedResult]);
+
   // Reset to first page when activeTab changes
   useEffect(() => {
-    setCurrentPage(1);
+    if (activeTab) {
+      setCurrentPage(1);
+    }
   }, [activeTab]);
 
   // Track page view on mount
@@ -181,6 +267,14 @@ const GoogleSimulation: React.FC<GoogleSimulationProps> = ({ searchType = 'greg'
                         result={result}
                         onOpen={(result) => {
                           setSelectedResult(result);
+                          // Update URL for result view
+                          const params = new URLSearchParams(window.location.search);
+                          params.set('result', result.id);
+                          window.history.pushState(
+                            { page: currentPage, tab: activeTab, resultId: result.id },
+                            '',
+                            `${window.location.pathname}?${params.toString()}`
+                          );
                         }}
                         isDark={isDark}
                         persona="greg"
@@ -297,17 +391,56 @@ const GoogleSimulation: React.FC<GoogleSimulationProps> = ({ searchType = 'greg'
         selectedResult.platform === 'LinkedIn' ? (
           <LinkedInProfile
             resultId={selectedResult.id}
-            onClose={() => setSelectedResult(null)}
+            onClose={() => {
+              setSelectedResult(null);
+              // Update URL when closing result
+              const params = new URLSearchParams(window.location.search);
+              params.delete('result');
+              const newUrl = params.toString() 
+                ? `${window.location.pathname}?${params.toString()}`
+                : window.location.pathname;
+              window.history.pushState(
+                { page: currentPage, tab: activeTab, resultId: null },
+                '',
+                newUrl
+              );
+            }}
           />
         ) : selectedResult.platform === 'Facebook' ? (
           <FacebookProfile
             resultId={selectedResult.id}
-            onClose={() => setSelectedResult(null)}
+            onClose={() => {
+              setSelectedResult(null);
+              // Update URL when closing result
+              const params = new URLSearchParams(window.location.search);
+              params.delete('result');
+              const newUrl = params.toString() 
+                ? `${window.location.pathname}?${params.toString()}`
+                : window.location.pathname;
+              window.history.pushState(
+                { page: currentPage, tab: activeTab, resultId: null },
+                '',
+                newUrl
+              );
+            }}
           />
         ) : (
           <ResultModal
             result={selectedResult}
-            onClose={() => setSelectedResult(null)}
+            onClose={() => {
+              setSelectedResult(null);
+              // Update URL when closing result
+              const params = new URLSearchParams(window.location.search);
+              params.delete('result');
+              const newUrl = params.toString() 
+                ? `${window.location.pathname}?${params.toString()}`
+                : window.location.pathname;
+              window.history.pushState(
+                { page: currentPage, tab: activeTab, resultId: null },
+                '',
+                newUrl
+              );
+            }}
           />
         )
       )}

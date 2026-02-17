@@ -35,7 +35,8 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
 
     // Validate required fields
     if (!event.eventType || !event.persona) {
-      return res.status(400).json({ error: 'Missing required fields' });
+      console.error('Missing required fields:', { eventType: event.eventType, persona: event.persona });
+      return res.status(400).json({ error: 'Missing required fields', received: event });
     }
 
     // Connect to MongoDB
@@ -43,23 +44,36 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     
     try {
       await client.connect();
+      console.log('Connected to MongoDB');
+      
       const db = client.db(DB_NAME);
       const collection = db.collection(COLLECTION_NAME);
 
-      // Insert the event
-      await collection.insertOne({
+      // Prepare document for insertion
+      const document = {
         ...event,
         timestamp: event.timestamp ? new Date(event.timestamp) : new Date(),
         createdAt: new Date(),
-      });
+      };
 
-      return res.status(200).json({ success: true });
+      // Insert the event
+      const result = await collection.insertOne(document);
+      console.log('Event inserted:', result.insertedId);
+
+      return res.status(200).json({ success: true, insertedId: result.insertedId });
+    } catch (dbError) {
+      console.error('Database error:', dbError);
+      throw dbError;
     } finally {
       await client.close();
     }
-  } catch (error) {
+  } catch (error: any) {
     console.error('Tracking error:', error);
-    // Return success even on error to not interrupt user experience
-    return res.status(200).json({ success: false, error: 'Tracking failed but continuing' });
+    // Return error details for debugging
+    return res.status(500).json({ 
+      success: false, 
+      error: error.message || 'Tracking failed',
+      stack: process.env.NODE_ENV === 'development' ? error.stack : undefined
+    });
   }
 }
