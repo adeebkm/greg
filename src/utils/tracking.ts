@@ -34,10 +34,10 @@ export const trackEvent = async (event: Omit<TrackingEvent, 'timestamp' | 'sessi
   };
 
   try {
-    // Determine API URL - use full URL in production, relative in development
-    const apiUrl = import.meta.env.PROD 
-      ? '/api/track' 
-      : `${window.location.origin}/api/track`;
+    // Always use relative URL - Vercel will handle routing
+    const apiUrl = '/api/track';
+    
+    console.log('Sending tracking event:', trackingEvent);
     
     // Send to API endpoint
     const response = await fetch(apiUrl, {
@@ -48,27 +48,34 @@ export const trackEvent = async (event: Omit<TrackingEvent, 'timestamp' | 'sessi
       body: JSON.stringify(trackingEvent),
     });
 
+    const responseText = await response.text();
+    let responseData;
+    try {
+      responseData = JSON.parse(responseText);
+    } catch {
+      responseData = { raw: responseText };
+    }
+
     if (!response.ok) {
-      const errorText = await response.text();
-      console.error('Failed to track event:', {
+      console.error('❌ Failed to track event:', {
         status: response.status,
         statusText: response.statusText,
-        error: errorText,
-        event: trackingEvent
+        response: responseData,
+        event: trackingEvent,
+        url: apiUrl
       });
     } else {
-      const result = await response.json();
-      if (import.meta.env.DEV) {
-        console.log('Event tracked successfully:', result);
-      }
+      console.log('✅ Event tracked successfully:', responseData);
     }
   } catch (error: any) {
     // Log error but don't interrupt user experience
-    console.error('Tracking error:', {
+    console.error('❌ Tracking error:', {
       error: error.message,
       stack: error.stack,
       event: trackingEvent,
-      note: 'API endpoint only works when deployed to Vercel'
+      note: import.meta.env.DEV 
+        ? 'API endpoint only works when deployed to Vercel. Use "vercel dev" to test locally.'
+        : 'Check Vercel function logs for details'
     });
   }
 };

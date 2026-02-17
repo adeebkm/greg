@@ -31,20 +31,46 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
   res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
 
   try {
-    const event = req.body;
+    // Parse request body - Vercel may send it as a string
+    let event = req.body;
+    if (typeof event === 'string') {
+      try {
+        event = JSON.parse(event);
+      } catch (parseError) {
+        console.error('Failed to parse request body:', parseError);
+        return res.status(400).json({ error: 'Invalid JSON in request body' });
+      }
+    }
+
+    console.log('Received request:', {
+      method: req.method,
+      headers: req.headers,
+      bodyType: typeof req.body,
+      body: event
+    });
 
     // Validate required fields
-    if (!event.eventType || !event.persona) {
-      console.error('Missing required fields:', { eventType: event.eventType, persona: event.persona });
-      return res.status(400).json({ error: 'Missing required fields', received: event });
+    if (!event || !event.eventType || !event.persona) {
+      console.error('Missing required fields:', { 
+        hasEvent: !!event,
+        eventType: event?.eventType, 
+        persona: event?.persona,
+        fullEvent: event 
+      });
+      return res.status(400).json({ 
+        error: 'Missing required fields', 
+        received: event,
+        required: ['eventType', 'persona']
+      });
     }
 
     // Connect to MongoDB
+    console.log('Connecting to MongoDB...');
     const client = new MongoClient(MONGODB_URI);
     
     try {
       await client.connect();
-      console.log('Connected to MongoDB');
+      console.log('✅ Connected to MongoDB successfully');
       
       const db = client.db(DB_NAME);
       const collection = db.collection(COLLECTION_NAME);
@@ -56,23 +82,46 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
         createdAt: new Date(),
       };
 
+      console.log('Inserting document:', JSON.stringify(document, null, 2));
+
       // Insert the event
       const result = await collection.insertOne(document);
-      console.log('Event inserted:', result.insertedId);
+      console.log('✅ Event inserted successfully:', result.insertedId);
 
-      return res.status(200).json({ success: true, insertedId: result.insertedId });
-    } catch (dbError) {
-      console.error('Database error:', dbError);
+      // Verify insertion
+      const verify = await collection.findOne({ _id: result.insertedId });
+      console.log('✅ Verification:', verify ? 'Document found' : 'Document NOT found');
+
+      return res.status(200).json({ 
+        success: true, 
+        insertedId: result.insertedId,
+        message: 'Event tracked successfully'
+      });
+    } catch (dbError: any) {
+      console.error('❌ Database error:', {
+        message: dbError.message,
+        name: dbError.name,
+        code: dbError.code,
+        stack: dbError.stack
+      });
       throw dbError;
     } finally {
       await client.close();
+      console.log('MongoDB connection closed');
     }
   } catch (error: any) {
-    console.error('Tracking error:', error);
+    console.error('❌ Tracking error:', {
+      message: error.message,
+      name: error.name,
+      code: error.code,
+      stack: error.stack
+    });
     // Return error details for debugging
     return res.status(500).json({ 
       success: false, 
       error: error.message || 'Tracking failed',
+      errorName: error.name,
+      errorCode: error.code,
       stack: process.env.NODE_ENV === 'development' ? error.stack : undefined
     });
   }
