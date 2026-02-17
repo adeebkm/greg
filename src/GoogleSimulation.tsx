@@ -266,15 +266,18 @@ const GoogleSimulation: React.FC<GoogleSimulationProps> = ({ searchType = 'greg'
                       <ResultCard
                         result={result}
                         onOpen={(result) => {
-                          setSelectedResult(result);
-                          // Update URL for result view
-                          const params = new URLSearchParams(window.location.search);
-                          params.set('result', result.id);
-                          window.history.pushState(
-                            { page: currentPage, tab: activeTab, resultId: result.id },
-                            '',
-                            `${window.location.pathname}?${params.toString()}`
-                          );
+                          // Only open LinkedIn and Facebook profiles
+                          if (result.platform === 'LinkedIn' || result.platform === 'Facebook') {
+                            setSelectedResult(result);
+                            // Update URL for result view
+                            const params = new URLSearchParams(window.location.search);
+                            params.set('result', result.id);
+                            window.history.pushState(
+                              { page: currentPage, tab: activeTab, resultId: result.id },
+                              '',
+                              `${window.location.pathname}?${params.toString()}`
+                            );
+                          }
                         }}
                         isDark={isDark}
                         persona="greg"

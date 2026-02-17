@@ -102,7 +102,7 @@ export const FacebookProfileView: React.FC<FacebookProfileProps> = ({ resultId, 
             </div>
           ))}
           <div style={{ position: 'relative' }}>
-            <img src={getFakeImageUrl(resultId, 'avatar')} style={{ width: '40px', height: '40px', borderRadius: '50%', cursor: 'pointer' }} alt="" />
+            <img src={getFakeImageUrl(resultId, 'avatar')} style={{ width: '40px', height: '40px', borderRadius: '50%', cursor: 'pointer', filter: 'blur(4px)' }} alt="" />
             <div style={{ position: 'absolute', bottom: 0, right: 0, width: '12px', height: '12px', backgroundColor: '#31a24c', borderRadius: '50%', border: '2px solid white' }} />
           </div>
           <button onClick={onClose} style={{ marginLeft: '8px', padding: '4px 8px', borderRadius: '4px', border: '1px solid #ddd', background: 'white', cursor: 'pointer' }}>Close</button>
@@ -124,7 +124,7 @@ export const FacebookProfileView: React.FC<FacebookProfileProps> = ({ resultId, 
           boxShadow: '0 2px 4px rgba(0,0,0,0.1)'
         }}>
           <div style={{ maxWidth: '1100px', margin: '0 auto', width: '100%', display: 'flex', alignItems: 'center', gap: '12px' }}>
-            <img src={getFakeImageUrl(resultId, 'avatar')} style={{ width: '40px', height: '40px', borderRadius: '50%' }} alt="" />
+            <img src={getFakeImageUrl(resultId, 'avatar')} style={{ width: '40px', height: '40px', borderRadius: '50%', filter: 'blur(4px)' }} alt="" />
             <span style={{ fontWeight: 600, fontSize: '17px' }}>{profile.name}</span>
           </div>
         </div>
@@ -140,7 +140,7 @@ export const FacebookProfileView: React.FC<FacebookProfileProps> = ({ resultId, 
           {/* Profile Identity Area */}
           <div style={{ padding: '0 32px 32px', marginTop: '-32px', display: 'flex', alignItems: 'flex-end', gap: '16px' }}>
             <div style={{ position: 'relative' }}>
-              <img src={getFakeImageUrl(resultId, 'avatar')} style={{ width: '168px', height: '168px', borderRadius: '50%', border: '4px solid white', backgroundColor: 'white' }} alt="" />
+              <img src={getFakeImageUrl(resultId, 'avatar')} style={{ width: '168px', height: '168px', borderRadius: '50%', border: '4px solid white', backgroundColor: 'white', filter: 'blur(8px)' }} alt="" />
             </div>
             <div style={{ flex: 1, paddingBottom: '16px' }}>
               <h1 style={{ fontSize: '32px', fontWeight: 700, margin: 0 }}>{profile.name}</h1>
@@ -213,7 +213,7 @@ export const FacebookProfileView: React.FC<FacebookProfileProps> = ({ resultId, 
               <div style={{ backgroundColor: 'white', borderRadius: '8px', boxShadow: '0 1px 2px rgba(0,0,0,0.1)', marginBottom: '16px' }}>
                 <div style={{ padding: '12px 16px', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                   <div style={{ display: 'flex', gap: '12px' }}>
-                    <img src={getFakeImageUrl(resultId, 'avatar')} style={{ width: '40px', height: '40px', borderRadius: '50%' }} alt="" />
+                    <img src={getFakeImageUrl(resultId, 'avatar')} style={{ width: '40px', height: '40px', borderRadius: '50%', filter: 'blur(4px)' }} alt="" />
                     <div>
                       <div style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
                         <span style={{ fontWeight: 600 }}>{profile.name}</span>
@@ -239,7 +239,8 @@ export const FacebookProfileView: React.FC<FacebookProfileProps> = ({ resultId, 
                         left: 0,
                         width: '100%',
                         height: '100%',
-                        objectFit: 'cover'
+                        objectFit: 'cover',
+                        filter: 'blur(8px)'
                       }} 
                       alt="" 
                     />

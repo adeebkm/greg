@@ -420,25 +420,40 @@ export const ResultCard: React.FC<ResultCardProps> = ({ result, onOpen, isDark, 
 
       {/* Title */}
       <h3 style={{ margin: '4px 0 0 0', padding: 0 }}>
-        <a
-          href="#"
-          onClick={(e) => {
-            e.preventDefault();
-            trackResultClick(result.id, result.platform, result.displayName, persona);
-            onOpen(result);
-          }}
-          style={{
-            fontSize: '20px',
-            lineHeight: '26px',
-            fontWeight: 400,
-            color: titleColor,
-            textDecoration: 'none'
-          }}
-          onMouseEnter={(e) => e.currentTarget.style.textDecoration = 'underline'}
-          onMouseLeave={(e) => e.currentTarget.style.textDecoration = 'none'}
-        >
-          {result.displayName}
-        </a>
+        {result.platform === 'LinkedIn' || result.platform === 'Facebook' ? (
+          <a
+            href="#"
+            onClick={(e) => {
+              e.preventDefault();
+              trackResultClick(result.id, result.platform, result.displayName, persona);
+              onOpen(result);
+            }}
+            style={{
+              fontSize: '20px',
+              lineHeight: '26px',
+              fontWeight: 400,
+              color: titleColor,
+              textDecoration: 'none',
+              cursor: 'pointer'
+            }}
+            onMouseEnter={(e) => e.currentTarget.style.textDecoration = 'underline'}
+            onMouseLeave={(e) => e.currentTarget.style.textDecoration = 'none'}
+          >
+            {result.displayName}
+          </a>
+        ) : (
+          <span
+            style={{
+              fontSize: '20px',
+              lineHeight: '26px',
+              fontWeight: 400,
+              color: textColor,
+              cursor: 'default'
+            }}
+          >
+            {result.displayName}
+          </span>
+        )}
       </h3>
 
       {/* Content Area with optional Side Image */}
