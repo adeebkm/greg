@@ -39,35 +39,8 @@ export const TopBar: React.FC<TopBarProps> = ({ searchQuery, onSearchChange, isD
           right: 0,
           height: '48px'
         }}>
-          <div style={{ display: 'flex', alignItems: 'center', gap: '16px', flex: '1', minWidth: 0 }}>
-            <button
-              onClick={(e) => {
-                e.preventDefault();
-                // Non-functional for now
-              }}
-              style={{
-                backgroundColor: '#4285f4',
-                border: 'none',
-                borderRadius: '20px',
-                padding: '8px 16px',
-                cursor: 'pointer',
-                color: '#fff',
-                fontWeight: 500,
-                fontSize: '14px',
-                display: 'flex',
-                alignItems: 'center',
-                gap: '6px',
-                whiteSpace: 'nowrap',
-                flexShrink: 0
-              }}
-              onMouseEnter={(e) => e.currentTarget.style.backgroundColor = '#357ae8'}
-              onMouseLeave={(e) => e.currentTarget.style.backgroundColor = '#4285f4'}
-            >
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                <path d="M19 12H5M12 19l-7-7 7-7"/>
-              </svg>
-              {!isMobile && <span>Back to survey</span>}
-            </button>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '30px' }}>
+            {/* Logo will be in search area, so this is empty or can be removed */}
           </div>
           <div style={{ display: 'flex', alignItems: 'center', gap: '8px', flexShrink: 0 }}>
             <button
