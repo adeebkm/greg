@@ -220,39 +220,40 @@ const GoogleSimulation: React.FC<GoogleSimulationProps> = ({ searchType = 'greg'
       <Tabs activeTab={activeTab} onTabChange={setActiveTab} isDark={isDark} />
 
       <div style={{ maxWidth: '1128px', margin: '0 auto', padding: isMobile ? '0 8px' : '0 16px' }}>
-        <div style={{ display: 'flex', gap: isMobile ? '0' : '32px', paddingTop: isMobile ? '12px' : '20px' }}>
+        {/* Back to survey button - outside the results column */}
+        <div style={{ paddingTop: isMobile ? '12px' : '20px', paddingBottom: '8px' }}>
+          <button
+            onClick={(e) => {
+              e.preventDefault();
+              // Non-functional for now
+            }}
+            style={{
+              backgroundColor: '#4285f4',
+              border: 'none',
+              borderRadius: '20px',
+              padding: '8px 16px',
+              cursor: 'pointer',
+              color: '#fff',
+              fontWeight: 500,
+              fontSize: '14px',
+              display: 'flex',
+              alignItems: 'center',
+              gap: '6px',
+              whiteSpace: 'nowrap',
+              marginLeft: isMobile ? '0' : '-16px'
+            }}
+            onMouseEnter={(e) => e.currentTarget.style.backgroundColor = '#357ae8'}
+            onMouseLeave={(e) => e.currentTarget.style.backgroundColor = '#4285f4'}
+          >
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+              <path d="M19 12H5M12 19l-7-7 7-7"/>
+            </svg>
+            {!isMobile && <span>Back to survey</span>}
+          </button>
+        </div>
+        <div style={{ display: 'flex', gap: isMobile ? '0' : '32px' }}>
           {/* Main Results Column */}
           <div style={{ flex: '1', minWidth: 0, width: '100%' }}>
-            {/* Back to survey button */}
-            <button
-              onClick={(e) => {
-                e.preventDefault();
-                // Non-functional for now
-              }}
-              style={{
-                backgroundColor: '#4285f4',
-                border: 'none',
-                borderRadius: '20px',
-                padding: '8px 16px',
-                cursor: 'pointer',
-                color: '#fff',
-                fontWeight: 500,
-                fontSize: '14px',
-                display: 'flex',
-                alignItems: 'center',
-                gap: '6px',
-                whiteSpace: 'nowrap',
-                marginBottom: '16px',
-                marginLeft: isMobile ? '-8px' : '-16px'
-              }}
-              onMouseEnter={(e) => e.currentTarget.style.backgroundColor = '#357ae8'}
-              onMouseLeave={(e) => e.currentTarget.style.backgroundColor = '#4285f4'}
-            >
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                <path d="M19 12H5M12 19l-7-7 7-7"/>
-              </svg>
-              {!isMobile && <span>Back to survey</span>}
-            </button>
             {/* Results Count */}
             <div style={{ color: '#70757a', fontSize: '14px', marginBottom: '16px' }}>
               About {filteredResults.length} results
