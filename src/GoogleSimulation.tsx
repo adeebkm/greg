@@ -242,7 +242,8 @@ const GoogleSimulation: React.FC<GoogleSimulationProps> = ({ searchType = 'greg'
                 alignItems: 'center',
                 gap: '6px',
                 whiteSpace: 'nowrap',
-                marginBottom: '16px'
+                marginBottom: '16px',
+                marginLeft: isMobile ? '-8px' : '-16px'
               }}
               onMouseEnter={(e) => e.currentTarget.style.backgroundColor = '#357ae8'}
               onMouseLeave={(e) => e.currentTarget.style.backgroundColor = '#4285f4'}
