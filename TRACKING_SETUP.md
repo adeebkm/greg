@@ -18,7 +18,7 @@
 3. **MongoDB Storage**
    - Database: `googlesim`
    - Collection: `tracking_events`
-   - Connection: `mongodb+srv://estatedeliuser:estatedeli12345@cluster0.xwvmm93.mongodb.net/`
+   - Connection: Set via `MONGODB_URI` environment variable in Vercel
 
 ## Testing
 

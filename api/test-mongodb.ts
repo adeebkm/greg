@@ -2,7 +2,7 @@
 import { MongoClient } from 'mongodb';
 import type { VercelRequest, VercelResponse } from '@vercel/node';
 
-const MONGODB_URI = 'mongodb+srv://skarmega_db_user:TVuabT70Dxm3VRAM@googlesim.bdwmndg.mongodb.net/';
+const MONGODB_URI = process.env.MONGODB_URI || '';
 const DB_NAME = 'googlesim';
 const COLLECTION_NAME = 'tracking_events';
 
@@ -21,6 +21,10 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
   }
 
   try {
+    if (!MONGODB_URI) {
+      return res.status(500).json({ error: 'MONGODB_URI environment variable is not set' });
+    }
+
     console.log('Testing MongoDB connection...');
     const client = new MongoClient(MONGODB_URI);
     
