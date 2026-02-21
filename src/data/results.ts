@@ -1693,7 +1693,7 @@ export const RESULTS_Greg_Krieger: SimResult[] = [
     id: "greg3",
     platform: "Instagram",
     displayName: "Greg Krieger (@deerrockknives)",
-    snippet: "1.6K+ followers · 206 following · 358 posts · @deerrockknives: \"I use the good shit 'cause I like the way it cuts Guide/former conservation specialist Ultra ...\",
+    snippet: "1.6K+ followers · 206 following · 358 posts · @deerrockknives: \"I use the good shit 'cause I like the way it cuts Guide/former conservation specialist Ultra ...\"",
     urlLike: "Instagram · deerrockknives",
     discoverability: "High",
     footprint: "Present",
