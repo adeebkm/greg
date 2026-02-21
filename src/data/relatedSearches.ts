@@ -7,7 +7,7 @@ export const getRelatedSearches = (searchQuery: string): string[] => {
     'Greg Krieger lawyer',
     'Greg Krieger Facebook',
     'Greg Krieger pastor',
-    'Gregory Krieger dsm-firmenich',
+    'Gregory Krieger Midwest Capital Advisors',
     'Greg Krieger Deer Rock Knives',
     'Greg Krieger Lafayette College'
   ];

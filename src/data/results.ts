@@ -1653,6 +1653,31 @@ export const RESULTS_Greg_Krieger: SimResult[] = [
     imageKey: "greg-linkedin-dir"
   },
   {
+    id: "greg5",
+    platform: "LinkedIn",
+    displayName: "Gregory Krieger - Midwest Capital Advisors",
+    snippet: "350+ followers · Chicago, Illinois, United States · Midwest Capital Advisors · Experience: Midwest Capital Advisors · Education: University of Michigan · Location: Chicago · 450+ connections on LinkedIn. View Gregory Krieger's profile on LinkedIn, ...",
+    urlLike: "LinkedIn · Gregory Krieger",
+    discoverability: "High",
+    footprint: "Present",
+    race: "White American",
+    location: "Chicago, Illinois",
+    followers: "350+",
+    imageKey: "greg-linkedin-profile"
+  },
+  {
+    id: "greg6",
+    platform: "Facebook",
+    displayName: "Greg Krieger in people",
+    snippet: "People named Greg Krieger ; Greg Krieger. Owner at Deer Rock Knives LLC · Lives in ; Greg Krieger. Lives in Greensburg, Indiana ; Gregory Krieger. Business ...Read more",
+    urlLike: "www.facebook.com › public › Greg-Krieger",
+    discoverability: "High",
+    footprint: "Present",
+    race: "White American",
+    location: "",
+    imageKey: "greg-facebook"
+  },
+  {
     id: "greg2",
     platform: "Howard, Kohn, Sprague & FitzGerald, LLP",
     displayName: "Greg Krieger",
@@ -1668,7 +1693,7 @@ export const RESULTS_Greg_Krieger: SimResult[] = [
     id: "greg3",
     platform: "Instagram",
     displayName: "Greg Krieger (@deerrockknives)",
-    snippet: "1.6K+ followers · 206 following · 358 posts · @deerrockknives: “I use the good shit 'cause I like the way it cuts Guide/former conservation specialist Ultra ...",
+    snippet: "1.6K+ followers · 206 following · 358 posts · @deerrockknives: "I use the good shit 'cause I like the way it cuts Guide/former conservation specialist Ultra ...",
     urlLike: "Instagram · deerrockknives",
     discoverability: "High",
     footprint: "Present",
@@ -1688,31 +1713,6 @@ export const RESULTS_Greg_Krieger: SimResult[] = [
     race: "White American",
     location: "Belvidere, N.J.",
     imageKey: "greg-football"
-  },
-  {
-    id: "greg5",
-    platform: "LinkedIn",
-    displayName: "Gregory Krieger - dsm-firmenich",
-    snippet: "590+ followers · Blairstown, New Jersey, United States · dsm-firmenich · Experience: dsm-firmenich · Education: Lafayette College · Location: Blairstown · 500+ connections on LinkedIn. View Gregory Krieger's profile on LinkedIn, ...",
-    urlLike: "LinkedIn · Gregory Krieger",
-    discoverability: "High",
-    footprint: "Present",
-    race: "White American",
-    location: "Blairstown, New Jersey",
-    followers: "590+",
-    imageKey: "greg-linkedin-profile"
-  },
-  {
-    id: "greg6",
-    platform: "Facebook",
-    displayName: "Greg Krieger in people",
-    snippet: "People named Greg Krieger ; Greg Krieger. Owner at Deer Rock Knives LLC · Lives in ; Greg Krieger. Lives in Greensburg, Indiana ; Gregory Krieger. Business ...Read more",
-    urlLike: "www.facebook.com › public › Greg-Krieger",
-    discoverability: "High",
-    footprint: "Present",
-    race: "White American",
-    location: "",
-    imageKey: "greg-facebook"
   },
   {
     id: "greg7",
