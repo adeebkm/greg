@@ -4,7 +4,7 @@ import type { VercelRequest, VercelResponse } from '@vercel/node';
 
 const MONGODB_URI = 'mongodb+srv://estatedeliuser:estatedeli12345@cluster0.xwvmm93.mongodb.net/';
 const DB_NAME = 'googlesim';
-const COLLECTION_NAME = 'tracking_events';
+const COLLECTION_NAME = 'greg_events';
 
 // Handle CORS preflight
 if (typeof process !== 'undefined' && process.env) {

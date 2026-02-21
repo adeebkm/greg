@@ -12,6 +12,88 @@ const IISC_LOGO_BASE64 = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABwAAAAc
 const GWU_LOGO_BASE64 = "data:image/webp;base64,UklGRpgBAABXRUJQVlA4IIwBAACQCACdASogABsAPtEutFooIagoGAEAGglsAJ0ygzM1g7HgRwKfyxVH909R7PR9FewIMs7uah206j27PfVohMCz5NL2jSa/x3sni5nJAAD+1RbuaL1WJbfz8NJtqQS2cSY/6tFh8hlWm33EySdm6c9FgAF7G4Pb3zcEmmsUgOoms07Z0YjYDGfHmkc6pCpq2XPSNv2K0izqsLAhoXj1lHtXUt/lsKef0qhhGWvdNev/yVV+zniPnTbKomu0Ocrfx//Q8nJj5tDqvMLTq++dkEf4v/6065ncNqnECOz8m6x9PcGeGL/style={ width: '100%', height: '100%', objectFit: 'contain' } 3wazagNgv/wrOx1cpCxKivL3KPoS28ubQJe0m7EY+6+B2bxyVI3CMJyU7C4GC4ae4Zesus5aJup+VM2BeCXbtcG8nr65vTetBedF/FTdogyvgmlNli3hJisVGTOTAl3CRW48DPbcoO2UYtM+Rcu8L+8zl9nkkzAK5u+pLKFqH++of3788IpgYYGedTj2fXaI/LgtO49nnPuUR8OtoQBDMjcIrTekAAA=";
 const DC_GOV_LOGO_BASE64 = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAIAAACQkWg2AAAAM0lEQVR4AWP4TyKgh4bW1v8MYBIG8IswAFlQBAP4RRggWpGl8YiQ5wcGEhCNNYxoP5AIAMbUHWN1n/uoAAAAAElFTkSuQmCC";
 const RAMAIAH_LOGO_URL = "https://upload.wikimedia.org/wikipedia/en/5/5a/Ramaiah_Institutions_Logo.png";
+const CHICAGO_INVESTMENT_LOGO = "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wCEAAkGBwgHBgkIBwgKCgkLDRYPDQwMDRsUFRAWIB0iIiAdHx8kKDQsJCYxJx8fLT0tMTU3Ojo6Iys/RD84QzQ5OjcBCgoKDQwNGg8PGjclHyU3Nzc1LTc3NzctNzc3Nzc3NzcuKzc3Ny01NzU3NzcrLSs1NzUrNzc3Nzc3KzUuNTU3N//AABEIACAAIAMBIgACEQEDEQH/xAAZAAEBAAMBAAAAAAAAAAAAAAAGBQMEBwH/xAAsEAACAQMDAgUCBwAAAAAAAAABAgMABBESITFBUQUTYXGxkeEUIjIzNHJz/8QAFwEBAQEBAAAAAAAAAAAAAAAAAAMEAv/EABkRAAIDAQAAAAAAAAAAAAAAAAABAgMhEf/aAAwDAQACEQMRAD8A6v4zbRJM10YtghLkrqDHjGM7VMOifUEtYdCrqYBSpIG5PseMd6v+MRq9k5kk0xLu44BHvR8CAyDzLvW3neWGLE/kzkN9cj771ltXJFoPD1THEELWkIjlGpFIJIB65HQbbetUfB7eKWaO6EW2nKkLpCnjvvnf2qa4gSRjFd6XEoj1AkDGrc88cdTV7wWNUs1MchaJv0DOcDJ6+vNK12Qk8N2aMSxPG3DAg0ZjjuXjDG8bLKucRr1x6dwDSmjtv+yn9I/kVS1ajiBguI7qOGR/xhJCqTmNd989u+9JYIxDCkYOQqgZPWoN7/Gn/wA1+aRUrXGxN4f/2Q==";
+const MIDWEST_CAPITAL_LOGO = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABwAAAAcCAYAAAByDd+UAAAA+0lEQVR4AWJwL/ChKx5BFgbNDOZgADBP3kYIA0EUpRM8BRBRgwjVBHbrUKQOKEEl4GN1cC3gycXuzMcbueVGwQP5t7baJ2bNGCDHPuPIfVUhPhzFYPAcMe1Spd+Sf5wbZWE8eYRrxkHkgQ1hgOvXe9uXYIxNoXO9jh7aE2JgCiTEug3mXbIiZFGHiZiJptAwJJm8yDzIlIQxiCSv0Jep/FI2jzmrCV+H4K1HQEcIyUNPXG3h9rV0Ui68qC5cfxmAvb4Q05dSWM8sBPFCgDKHfxKih/GEEJEc5xFGOUktnDEuU8eK1DEwhHsKwpQgCEJJZ0CO3ctGXruUrhgAPCIEzKkNgO0AAAAASUVORK5CYII=";
+
+// Company color map for fallback icons
+const companyColors: Record<string, string> = {
+  'M': '#1a5276', 'C': '#1e8449', 'G': '#d35400', 'N': '#6c3483',
+  'L': '#2e86c1', 'U': '#f1c40f', 'J': '#e74c3c', 'K': '#27ae60',
+  'F': '#3498db', 'S': '#e67e22', 'A': '#8e44ad', 'B': '#16a085',
+  'D': '#c0392b', 'E': '#2980b9', 'H': '#d68910', 'I': '#1abc9c',
+  'O': '#7d3c98', 'P': '#2471a3', 'Q': '#a93226', 'R': '#229954',
+  'T': '#0e6655', 'V': '#ca6f1e', 'W': '#5b2c6f', 'X': '#1a5276',
+  'Y': '#117a65', 'Z': '#922b21'
+};
+
+const getCompanyColor = (name: string) => {
+  const initial = name.charAt(0).toUpperCase();
+  return companyColors[initial] || '#0a66c2';
+};
+
+const CompanyLogo: React.FC<{ company: string; size?: number }> = ({ company, size = 48 }) => {
+  const [imgError, setImgError] = React.useState(false);
+  const initial = company.charAt(0).toUpperCase();
+  const bgColor = getCompanyColor(company);
+
+  // Check for companies with provided base64 logos first
+  const base64Logos: Record<string, string> = {
+    'Chicago Investment': CHICAGO_INVESTMENT_LOGO,
+    'Midwest Capital': MIDWEST_CAPITAL_LOGO,
+  };
+  const matchedBase64 = Object.entries(base64Logos).find(([key]) => company.includes(key));
+  if (matchedBase64) {
+    return (
+      <div style={{ width: `${size}px`, height: `${size}px`, backgroundColor: '#fff', borderRadius: '4px', border: '1px solid #e0e0e0', display: 'flex', alignItems: 'center', justifyContent: 'center', overflow: 'hidden', flexShrink: 0 }}>
+        <img src={matchedBase64[1]} style={{ width: '80%', height: '80%', objectFit: 'contain' }} alt="" />
+      </div>
+    );
+  }
+
+  // Known real companies that have Clearbit logos  
+  const realCompanyDomains: Record<string, string> = {
+    'Microsoft': 'microsoft.com',
+    'Amazon': 'amazon.com',
+    'Google': 'google.com',
+    'Apple': 'apple.com',
+    'Meta': 'meta.com',
+    'Salesforce': 'salesforce.com',
+    'Oracle': 'oracle.com',
+    'IBM': 'ibm.com',
+    'Deloitte': 'deloitte.com',
+    'University of Michigan': 'umich.edu',
+    'Kforce': 'kforce.com',
+    'Michael Page': 'michaelpage.com',
+    'George Washington University': 'gwu.edu',
+    'Georgetown University': 'georgetown.edu',
+  };
+
+  const matchedDomain = Object.entries(realCompanyDomains).find(([key]) => company.includes(key));
+  
+  if (!matchedDomain || imgError) {
+    return (
+      <div style={{ 
+        width: `${size}px`, height: `${size}px`, backgroundColor: bgColor, 
+        borderRadius: '4px', display: 'flex', alignItems: 'center', justifyContent: 'center', 
+        flexShrink: 0, color: 'white', fontWeight: 'bold', fontSize: `${Math.round(size * 0.4)}px`
+      }}>
+        {initial}
+      </div>
+    );
+  }
+
+  const logoUrl = `https://logo.clearbit.com/${matchedDomain[1]}?size=${size}`;
+
+  return (
+    <div style={{ 
+      width: `${size}px`, height: `${size}px`, backgroundColor: '#fff', 
+      borderRadius: '4px', border: '1px solid #e0e0e0', display: 'flex', 
+      alignItems: 'center', justifyContent: 'center', overflow: 'hidden', flexShrink: 0 
+    }}>
+      <img src={logoUrl} style={{ width: '80%', height: '80%', objectFit: 'contain' }} alt="" onError={() => setImgError(true)} />
+    </div>
+  );
+};
 
 export const LinkedInProfileView: React.FC<LinkedInProfileProps> = ({ resultId, onClose }) => {
   const [showStickyHeader, setShowStickyHeader] = React.useState(false);
@@ -330,13 +412,17 @@ export const LinkedInProfileView: React.FC<LinkedInProfileProps> = ({ resultId, 
             <div style={{ display: 'flex', flexDirection: 'column', gap: '24px' }}>
               {profile.experience.map((exp, i) => (
                 <div key={i} style={{ display: 'flex', gap: '12px' }}>
-                  <div style={{ width: '48px', height: '48px', backgroundColor: '#fff', borderRadius: '4px', border: '1px solid #e0e0e0', display: 'flex', alignItems: 'center', justifyContent: 'center', overflow: 'hidden', flexShrink: 0 }}>
-                    <img 
-                      src={exp.company.includes('George Mason') ? GMU_LOGO_BASE64 : exp.company.includes('IISc') ? IISC_LOGO_BASE64 : getCompanyLogoUrl(exp.company)} 
-                      style={{ width: '80%', height: '80%', objectFit: 'contain' }} 
-                      alt="" 
-                    />
-                  </div>
+                  {exp.company.includes('George Mason') ? (
+                    <div style={{ width: '48px', height: '48px', backgroundColor: '#fff', borderRadius: '4px', border: '1px solid #e0e0e0', display: 'flex', alignItems: 'center', justifyContent: 'center', overflow: 'hidden', flexShrink: 0 }}>
+                      <img src={GMU_LOGO_BASE64} style={{ width: '80%', height: '80%', objectFit: 'contain' }} alt="" />
+                    </div>
+                  ) : exp.company.includes('IISc') ? (
+                    <div style={{ width: '48px', height: '48px', backgroundColor: '#fff', borderRadius: '4px', border: '1px solid #e0e0e0', display: 'flex', alignItems: 'center', justifyContent: 'center', overflow: 'hidden', flexShrink: 0 }}>
+                      <img src={IISC_LOGO_BASE64} style={{ width: '80%', height: '80%', objectFit: 'contain' }} alt="" />
+                    </div>
+                  ) : (
+                    <CompanyLogo company={exp.company.split(' · ')[0]} />
+                  )}
                   <div style={{ flex: 1 }}>
                     <div style={{ fontSize: '16px', fontWeight: 600 }}>{exp.title}</div>
                     <div style={{ fontSize: '14px' }}>{exp.company}</div>
@@ -364,13 +450,17 @@ export const LinkedInProfileView: React.FC<LinkedInProfileProps> = ({ resultId, 
             <div style={{ display: 'flex', flexDirection: 'column', gap: '24px' }}>
               {profile.education.map((edu, i) => (
                 <div key={i} style={{ display: 'flex', gap: '12px' }}>
-                  <div style={{ width: '48px', height: '48px', backgroundColor: '#fff', borderRadius: '4px', border: '1px solid #e0e0e0', display: 'flex', alignItems: 'center', justifyContent: 'center', overflow: 'hidden', flexShrink: 0 }}>
-                    <img 
-                      src={edu.school.includes('George Mason') ? GMU_LOGO_BASE64 : edu.school.includes('Ramaiah') ? RAMAIAH_LOGO_URL : getCompanyLogoUrl(edu.school)} 
-                      style={{ width: '80%', height: '80%', objectFit: 'contain' }} 
-                      alt="" 
-                    />
-                  </div>
+                  {edu.school.includes('George Mason') ? (
+                    <div style={{ width: '48px', height: '48px', backgroundColor: '#fff', borderRadius: '4px', border: '1px solid #e0e0e0', display: 'flex', alignItems: 'center', justifyContent: 'center', overflow: 'hidden', flexShrink: 0 }}>
+                      <img src={GMU_LOGO_BASE64} style={{ width: '80%', height: '80%', objectFit: 'contain' }} alt="" />
+                    </div>
+                  ) : edu.school.includes('Ramaiah') ? (
+                    <div style={{ width: '48px', height: '48px', backgroundColor: '#fff', borderRadius: '4px', border: '1px solid #e0e0e0', display: 'flex', alignItems: 'center', justifyContent: 'center', overflow: 'hidden', flexShrink: 0 }}>
+                      <img src={RAMAIAH_LOGO_URL} style={{ width: '80%', height: '80%', objectFit: 'contain' }} alt="" onError={(e) => { (e.target as HTMLImageElement).style.display = 'none'; }} />
+                    </div>
+                  ) : (
+                    <CompanyLogo company={edu.school} />
+                  )}
                   <div style={{ flex: 1 }}>
                     <div style={{ fontSize: '16px', fontWeight: 600 }}>{edu.school}</div>
                     <div style={{ fontSize: '14px' }}>{edu.degree}{edu.field ? `, ${edu.field}` : ''}</div>
@@ -386,9 +476,7 @@ export const LinkedInProfileView: React.FC<LinkedInProfileProps> = ({ resultId, 
             <h2 style={{ fontSize: '20px', fontWeight: 600, marginBottom: '20px' }}>Licenses & certifications</h2>
             <div style={{ display: 'flex', flexDirection: 'column', gap: '24px' }}>
               <div style={{ display: 'flex', gap: '12px' }}>
-                <div style={{ width: '48px', height: '48px', backgroundColor: '#232f3e', borderRadius: '4px', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
-                  <span style={{ color: 'white', fontSize: '10px', fontWeight: 'bold' }}>aws</span>
-                </div>
+                <CompanyLogo company="AWS" />
                 <div style={{ flex: 1 }}>
                   <div style={{ fontSize: '16px', fontWeight: 600 }}>AWS Academy Graduate - AWS Academy Data Engineering</div>
                   <div style={{ fontSize: '14px' }}>Amazon Web Services (AWS)</div>
@@ -398,9 +486,7 @@ export const LinkedInProfileView: React.FC<LinkedInProfileProps> = ({ resultId, 
                 </div>
               </div>
               <div style={{ display: 'flex', gap: '12px' }}>
-                <div style={{ width: '48px', height: '48px', backgroundColor: '#fff', border: '1px solid #e0e0e0', borderRadius: '4px', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
-                  <div style={{ width: '24px', height: '24px', backgroundColor: '#4285f4', borderRadius: '50%' }} />
-                </div>
+                <CompanyLogo company="Google Cloud" />
                 <div style={{ flex: 1 }}>
                   <div style={{ fontSize: '16px', fontWeight: 600 }}>Perform Foundational Infrastructure Tasks in Google Cloud</div>
                   <div style={{ fontSize: '14px' }}>Qwiklabs</div>
@@ -420,9 +506,7 @@ export const LinkedInProfileView: React.FC<LinkedInProfileProps> = ({ resultId, 
             <h2 style={{ fontSize: '20px', fontWeight: 600, marginBottom: '20px' }}>Volunteering</h2>
             <div style={{ display: 'flex', flexDirection: 'column', gap: '24px' }}>
               <div style={{ display: 'flex', gap: '12px' }}>
-                <div style={{ width: '48px', height: '48px', backgroundColor: '#f3f2ef', borderRadius: '4px', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
-                  <img src={getCompanyLogoUrl('George Mason University')} style={{ width: '80%', height: '80%', objectFit: 'contain' }} alt="" />
-                </div>
+                <CompanyLogo company="Google Developer" />
                 <div style={{ flex: 1 }}>
                   <div style={{ fontSize: '16px', fontWeight: 600 }}>Core Member</div>
                   <div style={{ fontSize: '14px' }}>Google Developer Student Clubs, Ramaiah Institute of Technology</div>
@@ -431,9 +515,7 @@ export const LinkedInProfileView: React.FC<LinkedInProfileProps> = ({ resultId, 
                 </div>
               </div>
               <div style={{ display: 'flex', gap: '12px' }}>
-                <div style={{ width: '48px', height: '48px', backgroundColor: '#000', borderRadius: '4px', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
-                  <span style={{ color: 'white', fontSize: '8px' }}>CLUTCH</span>
-                </div>
+                <CompanyLogo company="ClutchRIT Esports" />
                 <div style={{ flex: 1 }}>
                   <div style={{ fontSize: '16px', fontWeight: 600 }}>Senior Coordinator</div>
                   <div style={{ fontSize: '14px' }}>ClutchRIT Esports</div>
@@ -484,7 +566,7 @@ export const LinkedInProfileView: React.FC<LinkedInProfileProps> = ({ resultId, 
             </div>
             <div style={{ display: 'grid', gridTemplateColumns: isMobile ? '1fr' : '1fr 1fr', gap: '24px' }}>
               <div style={{ display: 'flex', gap: '12px' }}>
-                <div style={{ width: '48px', height: '48px', backgroundColor: '#003366', color: 'white', display: 'flex', alignItems: 'center', justifyContent: 'center', fontWeight: 'bold', borderRadius: '4px' }}>K</div>
+                <CompanyLogo company="Kforce Inc" />
                 <div>
                   <div style={{ fontSize: '14px', fontWeight: 600 }}>Kforce Inc</div>
                   <div style={{ fontSize: '12px', color: '#666' }}>1,078,443 followers</div>
@@ -492,7 +574,7 @@ export const LinkedInProfileView: React.FC<LinkedInProfileProps> = ({ resultId, 
                 </div>
               </div>
               <div style={{ display: 'flex', gap: '12px' }}>
-                <div style={{ width: '48px', height: '48px', backgroundColor: '#002f5f', color: 'white', display: 'flex', alignItems: 'center', justifyContent: 'center', fontWeight: 'bold', borderRadius: '4px', fontSize: '10px', textAlign: 'center', padding: '4px' }}>Michael Page</div>
+                <CompanyLogo company="Michael Page" />
                 <div>
                   <div style={{ fontSize: '14px', fontWeight: 600 }}>Michael Page</div>
                   <div style={{ fontSize: '12px', color: '#666' }}>4,136,806 followers</div>

@@ -169,7 +169,7 @@ export const FacebookProfileView: React.FC<FacebookProfileProps> = ({ resultId, 
       <div style={{ backgroundColor: 'white' }}>
         <div style={{ maxWidth: '1100px', margin: '0 auto' }}>
           {/* Cover Photo Area */}
-          <div style={{ height: isMobile ? '200px' : '400px', backgroundColor: '#f0f2f5', borderRadius: '0 0 8px 8px', position: 'relative' }}>
+          <div style={{ height: isMobile ? '200px' : '400px', background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)', borderRadius: '0 0 8px 8px', position: 'relative' }}>
           </div>
 
           {/* Profile Identity Area */}
