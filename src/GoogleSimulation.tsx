@@ -228,27 +228,28 @@ const GoogleSimulation: React.FC<GoogleSimulationProps> = ({ searchType = 'greg'
               // Non-functional for now
             }}
             style={{
-              backgroundColor: '#4285f4',
+              backgroundColor: '#1a73e8',
               border: 'none',
-              borderRadius: '20px',
-              padding: '8px 16px',
+              borderRadius: '24px',
+              padding: '12px 24px',
               cursor: 'pointer',
               color: '#fff',
-              fontWeight: 500,
-              fontSize: '14px',
+              fontWeight: 600,
+              fontSize: '16px',
               display: 'flex',
               alignItems: 'center',
-              gap: '6px',
+              gap: '8px',
               whiteSpace: 'nowrap',
-              marginLeft: isMobile ? '0' : '-16px'
+              boxShadow: '0 2px 8px rgba(26, 115, 232, 0.4)',
+              transition: 'all 0.2s ease'
             }}
-            onMouseEnter={(e) => e.currentTarget.style.backgroundColor = '#357ae8'}
-            onMouseLeave={(e) => e.currentTarget.style.backgroundColor = '#4285f4'}
+            onMouseEnter={(e) => { e.currentTarget.style.backgroundColor = '#1557b0'; e.currentTarget.style.boxShadow = '0 4px 12px rgba(26, 115, 232, 0.5)'; }}
+            onMouseLeave={(e) => { e.currentTarget.style.backgroundColor = '#1a73e8'; e.currentTarget.style.boxShadow = '0 2px 8px rgba(26, 115, 232, 0.4)'; }}
           >
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
               <path d="M19 12H5M12 19l-7-7 7-7"/>
             </svg>
-            {!isMobile && <span>Back to survey</span>}
+            <span>Back to survey</span>
           </button>
         </div>
         <div style={{ display: 'flex', gap: isMobile ? '0' : '32px' }}>
