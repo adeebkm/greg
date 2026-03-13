@@ -26,11 +26,10 @@ const GoogleSimulation: React.FC<GoogleSimulationProps> = ({ searchType = 'greg'
   const [isMobile, setIsMobile] = useState(false);
   const resultsPerPage = 10;
 
-  // Read footprint condition from URL parameter (?condition=absent)
-  const footprintCondition = useMemo(() => {
-    const params = new URLSearchParams(window.location.search);
-    return params.get('condition') || 'present';
-  }, []);
+  // Capture returnUrl and condition from the initial URL before any rewrites
+  const initialParams = useMemo(() => new URLSearchParams(window.location.search), []);
+  const returnUrl = useMemo(() => initialParams.get('returnUrl'), [initialParams]);
+  const footprintCondition = useMemo(() => initialParams.get('condition') || 'present', [initialParams]);
 
   // Force light mode as requested
   const isDark = false;
@@ -107,7 +106,7 @@ const GoogleSimulation: React.FC<GoogleSimulationProps> = ({ searchType = 'greg'
     }
 
     const params = new URLSearchParams();
-    // Preserve condition parameter across navigation
+    if (returnUrl) params.set('returnUrl', returnUrl);
     if (footprintCondition === 'absent') params.set('condition', 'absent');
     if (currentPage > 1) params.set('page', currentPage.toString());
     if (activeTab !== 'All') params.set('tab', activeTab);
@@ -237,11 +236,11 @@ const GoogleSimulation: React.FC<GoogleSimulationProps> = ({ searchType = 'greg'
         <div style={{ paddingTop: isMobile ? '12px' : '20px', paddingBottom: '8px' }}>
           <button
             onClick={() => {
-              const params = new URLSearchParams(window.location.search);
-              const returnUrl = params.get('returnUrl');
-              if (returnUrl) {
-                window.location.href = returnUrl;
+              if (!returnUrl) {
+                console.error('Missing returnUrl query parameter');
+                return;
               }
+              window.location.href = returnUrl;
             }}
             style={{
               backgroundColor: '#1a73e8',
